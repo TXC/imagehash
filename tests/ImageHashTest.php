@@ -1,6 +1,6 @@
 <?php
 
-use Jenssegers\ImageHash\ImageHash;
+use TXC\ImageHash\ImageHash;
 
 class ImageHashTest extends PHPUnit_Framework_TestCase
 {

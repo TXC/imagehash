@@ -1,10 +1,10 @@
 <?php
 
-use Jenssegers\ImageHash\ImageHash;
-use Jenssegers\ImageHash\Implementation;
-use Jenssegers\ImageHash\Implementations\AverageHash;
-use Jenssegers\ImageHash\Implementations\DifferenceHash;
-use Jenssegers\ImageHash\Implementations\PerceptualHash;
+use TXC\ImageHash\ImageHash;
+use TXC\ImageHash\Implementation;
+use TXC\ImageHash\Implementations\AverageHash;
+use TXC\ImageHash\Implementations\DifferenceHash;
+use TXC\ImageHash\Implementations\PerceptualHash;
 
 class ImageTest extends PHPUnit_Framework_TestCase
 {

@@ -1,6 +1,6 @@
-<?php namespace Jenssegers\ImageHash\Implementations;
+<?php namespace TXC\ImageHash\Implementations;
 
-use Jenssegers\ImageHash\Implementation;
+use TXC\ImageHash\Implementation;
 
 class DifferenceHash implements Implementation
 {

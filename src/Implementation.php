@@ -1,4 +1,4 @@
-<?php namespace Jenssegers\ImageHash;
+<?php namespace TXC\ImageHash;
 
 interface Implementation
 {

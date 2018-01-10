@@ -1,8 +1,8 @@
-<?php namespace Jenssegers\ImageHash;
+<?php namespace TXC\ImageHash;
 
 use Exception;
 use InvalidArgumentException;
-use Jenssegers\ImageHash\Implementations\DifferenceHash;
+use TXC\ImageHash\Implementations\DifferenceHash;
 
 class ImageHash
 {
