@@ -13,14 +13,25 @@ class PerceptualHash implements Implementation
     {
         // Resize the image.
         $resized = imagecreatetruecolor(static::SIZE, static::SIZE);
-        imagecopyresampled($resized, $resource, 0, 0, 0, 0, static::SIZE, static::SIZE, imagesx($resource), imagesy($resource));
+        imagecopyresampled(
+            $resized,
+            $resource,
+            0,
+            0,
+            0,
+            0,
+            static::SIZE,
+            static::SIZE,
+            imagesx($resource),
+            imagesy($resource)
+        );
 
         // Get luma value (YCbCr) from RGB colors and calculate the DCT for each row.
         $matrix = [];
         $row = [];
         $rows = [];
         $col = [];
-        $cols = [];
+
         for ($y = 0; $y < static::SIZE; $y++) {
             for ($x = 0; $x < static::SIZE; $x++) {
                 $rgb = imagecolorsforindex($resized, imagecolorat($resized, $x, $y));
@@ -68,6 +79,7 @@ class PerceptualHash implements Implementation
      * Perform a 1 dimension Discrete Cosine Transformation.
      *
      * @param array $pixels
+     * @return array
      */
     protected function DCT1D(array $pixels)
     {
@@ -101,7 +113,7 @@ class PerceptualHash implements Implementation
     protected function median(array $pixels)
     {
         sort($pixels, SORT_NUMERIC);
-        $middle = floor(count($pixels) / 2);
+        $middle = (int) floor(count($pixels) / 2);
 
         if (count($pixels) % 2) {
             $median = $pixels[$middle];

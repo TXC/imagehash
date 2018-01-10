@@ -17,7 +17,18 @@ class DifferenceHash implements Implementation
 
         // Resize the image.
         $resized = imagecreatetruecolor($width, $heigth);
-        imagecopyresampled($resized, $resource, 0, 0, 0, 0, $width, $heigth, imagesx($resource), imagesy($resource));
+        imagecopyresampled(
+            $resized,
+            $resource,
+            0,
+            0,
+            0,
+            0,
+            $width,
+            $heigth,
+            imagesx($resource),
+            imagesy($resource)
+        );
 
         $hash = 0;
         $one = 1;

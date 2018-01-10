@@ -13,7 +13,18 @@ class AverageHash implements Implementation
     {
         // Resize the image.
         $resized = imagecreatetruecolor(static::SIZE, static::SIZE);
-        imagecopyresampled($resized, $resource, 0, 0, 0, 0, static::SIZE, static::SIZE, imagesx($resource), imagesy($resource));
+        imagecopyresampled(
+            $resized,
+            $resource,
+            0,
+            0,
+            0,
+            0,
+            static::SIZE,
+            static::SIZE,
+            imagesx($resource),
+            imagesy($resource)
+        );
 
         // Create an array of greyscale pixel values.
         $pixels = [];

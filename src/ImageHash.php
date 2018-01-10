@@ -1,5 +1,6 @@
 <?php namespace TXC\ImageHash;
 
+use BadMethodCallException;
 use Exception;
 use InvalidArgumentException;
 use TXC\ImageHash\Implementations\DifferenceHash;
@@ -15,6 +16,11 @@ class ImageHash
      * Return hashes as decimals.
      */
     const DECIMAL = 'dec';
+
+    /**
+     * Return hashes as binary.
+     */
+    const BINARY = 'bin';
 
     /**
      * The hashing implementation.
@@ -105,19 +111,34 @@ class ImageHash
      */
     public function distance($hash1, $hash2)
     {
+        $dh = 0;
+
         if (extension_loaded('gmp')) {
-            if ($this->mode === self::HEXADECIMAL) {
-                $dh = gmp_hamdist('0x'.$hash1, '0x'.$hash2);
-            } else {
-                $dh = gmp_hamdist($hash1, $hash2);
+            switch($this->mode)
+            {
+                case self::HEXADECIMAL:
+                    $dh = gmp_hamdist('0x'.$hash1, '0x'.$hash2);
+                    break;
+                case self::BINARY:
+                    $dh = gmp_hamdist('0b'.$hash1, '0b'.$hash2);
+                    break;
+                case self::DECIMAL:
+                    $dh = gmp_hamdist($hash1, $hash2);
+                    break;
             }
         } else {
-            if ($this->mode === self::HEXADECIMAL) {
-                $hash1 = $this->hexdec($hash1);
-                $hash2 = $this->hexdec($hash2);
+            switch($this->mode)
+            {
+                case self::HEXADECIMAL:
+                    $hash1 = $this->hexdec($hash1);
+                    $hash2 = $this->hexdec($hash2);
+                    break;
+                case self::BINARY:
+                    $hash1 = $this->bindec($hash1);
+                    $hash2 = $this->bindec($hash2);
+                    break;
             }
 
-            $dh = 0;
             for ($i = 0; $i < 64; $i++) {
                 $k = (1 << $i);
                 if (($hash1 & $k) !== ($hash2 & $k)) {
@@ -143,6 +164,20 @@ class ImageHash
         }
 
         return hexdec($hex);
+    }
+
+    /**
+     * Convert binary to signed decimal.
+     *
+     * @param string $bin
+     * @return int
+     */
+    public function bindec($bin)
+    {
+        if(PHP_INT_SIZE !== 8) {
+            throw new BadMethodCallException();
+        }
+        return (int) bindec($bin);
     }
 
     /**
@@ -193,6 +228,18 @@ class ImageHash
      */
     protected function formatHash($hash)
     {
-        return $this->mode === static::HEXADECIMAL ? dechex($hash) : $hash;
+        switch($this->mode)
+        {
+            case static::HEXADECIMAL:
+                return dechex($hash);
+                break;
+            case static::DECIMAL:
+                return $hash;
+                break;
+            case static::BINARY:
+                return decbin($hash);
+                break;
+        }
+        return '';
     }
 }
