@@ -1,8 +1,8 @@
 {
-    "name": "jenssegers/imagehash",
+    "name": "txc/imagehash",
     "description": "Perceptual image hashing for PHP",
     "keywords": ["imagehash", "perceptual", "hash", "dhash", "ahash", "phash", "image hash"],
-    "homepage": "https://github.com/jenssegers/imagehash",
+    "homepage": "https://github.com/TXC/imagehash",
     "license": "MIT",
     "authors": [
         {
@@ -11,6 +11,9 @@
         },
         {
             "name": "Kenneth Rapp"
+        },
+        {
+            "name": "Jonas Marklén"
         }
     ],
     "require": {
@@ -21,9 +24,13 @@
         "phpunit/phpunit": "^4.0|^5.0",
         "satooshi/php-coveralls": "^0.6"
     },
+    "scripts": {
+        "test": "phpunit --coverage-clover ./clover.xml",
+        "coverage": "coveralls -v"
+    },
     "autoload": {
         "psr-4": {
-            "Jenssegers\\ImageHash\\": "src"
+            "TXC\\ImageHash\\": "src"
         }
     }
 }
